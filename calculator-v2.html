@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+
+        </title>
+        <script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
+        <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+    </head>
+    <body>
+        <div id="root">
+
+        </div>
+        <script type="text/babel">
+            let rootHandle = document.getElementById('root');
+
+            class Add extends React.Component {
+                constructor (props){
+                    super(props);
+                    this.state = {
+                        sum: 0  
+                    }                    
+                }
+
+                catchInput1(e) {
+                    this.a = e.target.value;
+                }
+                catchInput2(e) {
+                    this.b = e.target.value;
+                }
+
+                add() {
+                    let val_a = parseInt(this.a);
+                    let val_b = parseInt(this.b);
+                    let sum = val_a + val_b;
+                    return sum;
+                }
+
+                handleClick(){
+                    this.setState({
+                        sum: this.add()
+                    })
+                }
+                    
+                render() {
+                    return (
+                        <div>
+                        <h2> { this.state.sum } </h2>
+                        <input type="number" onChange={this.catchInput1.bind(this)}/>
+                        <input type="number" onChange={this.catchInput2.bind(this)}/>
+                        <button onClick={this.handleClick.bind(this)}> add </button>
+                    </div>
+                    )    
+                }
+            }
+            
+            class App extends React.Component {
+                render() {
+                    return (
+                        <div> 
+                            <Add />
+                        </div>
+                    )
+                }
+            }
+
+
+            ReactDOM.render(<App/>, rootHandle);    
+
+        </script>
+    </body>
+</html>
