@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+
+        </title>
+        <script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
+        <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+    </head>
+    <body>
+        <div id="root">
+
+        </div>
+        <script type="text/babel">
+
+            let rootHandle = document.getElementById('root');
+            let inputHandle = document.getElementsByClassName('input');
+            
+            class Todo extends React.Component {
+                constructor(props){
+                    super(props);
+                    this.tasks = [];
+                }
+
+                catchInput(e) {
+                    this.tasks.push(e.target.value); 
+                }
+
+                handleClick() {
+                    return (
+                        <div>
+                            <ul>
+                                { this.tasks.map(( task, index ) => <li key={index}>
+                                {task} } </li>)}
+                            </ul>
+                        </div>
+                    )
+                }
+
+                render() {
+                    return (
+                        <div>
+                            <h2> Tasks to be completed </h2>
+                            <input className="input" type="text" onChange={this.catchInput.bind(this)}/><br/><br/>
+                            <button onClick={this.handleClick.bind(this)}> add to task </button><br/><br/> 
+                        </div>
+                    )
+                }
+            }
+
+                class App extends React.Component {
+                    render() {
+                        return (
+                            <div>
+                                <Todo />
+                            </div>
+                        )
+                    }
+                }
+            
+
+            ReactDOM.render(<App/>, rootHandle);
+            
+        </script>
+    </body>
+</html>
