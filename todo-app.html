@@ -14,9 +14,7 @@
 
         </div>
         <script type="text/babel">
-            const index = 0;
             let rootHandle = document.getElementById('root');
-            let rootHandle = document.getElementsByClassName('ulTag');
 
             class Todo extends React.Component {
                 constructor(props){
@@ -49,7 +47,7 @@
                     return (
                         <div>
                             <h2>Listing Tasks - {this.state.tasks.length} </h2>
-                            <ul className="ulTag">
+                            <ul>
                                 { this.state.tasks.map((task,index) => <li className={index} key={index}> { task }<button onClick={this.handleClick.bind(this)}> delete </button></li>)}
                             </ul>
                             <form onSubmit={this.handleSubmit.bind(this)}> 
