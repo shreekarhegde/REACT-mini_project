@@ -14,55 +14,62 @@
 
         </div>
         <script type="text/babel">
-
             let rootHandle = document.getElementById('root');
-            let inputHandle = document.getElementsByClassName('input');
-            
+
             class Todo extends React.Component {
                 constructor(props){
                     super(props);
-                    this.tasks = [];
+                    this.state = {
+                        title: '', 
+                        tasks : []
+                    }
                 }
 
-                catchInput(e) {
-                    this.tasks.push(e.target.value); 
+                handleSubmit(e) {
+                    e.preventDefault();
+                    let task = e.target[0].value;
+                    console.log(task);
+                    this.setState(prevState => ({
+                        tasks: prevState.tasks.concat([task]),
+                        title: ''                
+                        }))
                 }
 
-                handleClick() {
-                    return (
-                        <div>
-                            <ul>
-                                { this.tasks.map(( task, index ) => <li key={index}>
-                                {task} } </li>)}
-                            </ul>
-                        </div>
-                    )
+                noTasks(){
+                    return <span> NO Tasks Found </span>
+                }
+
+                taskTitle() {
+                    console.log(this.state);
+                    return <span> Total Tasks - { this.state.tasks.length } </span>
+                }
+
+                handleChange(e){
+                    e.persist(); 
+                    console.dir(e.target.value);
+                    this.setState(prevState => ({
+                        title: e.target.value
+                    }))
+                   
                 }
 
                 render() {
                     return (
                         <div>
-                            <h2> Tasks to be completed </h2>
-                            <input className="input" type="text" onChange={this.catchInput.bind(this)}/><br/><br/>
-                            <button onClick={this.handleClick.bind(this)}> add to task </button><br/><br/> 
+                            <h2>Listing Tasks - {this.state.tasks.length} </h2>
+                            <ul>
+                                { this.state.tasks.map((task,index) => <li key={index}> { task }</li>)}
+                            </ul>
+                            <form onSubmit={this.handleSubmit.bind(this)}> 
+                            <input type="text" value={this.state.title} onChange={this.handleChange.bind(this)} name="task"/>
+                            <input type="submit" value="Add To Task"/> 
+                            </form>
                         </div>
                     )
                 }
             }
-
-                class App extends React.Component {
-                    render() {
-                        return (
-                            <div>
-                                <Todo />
-                            </div>
-                        )
-                    }
-                }
             
-
-            ReactDOM.render(<App/>, rootHandle);
-            
+            ReactDOM.render(<Todo/>, rootHandle)
         </script>
     </body>
 </html>
