@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+
+        </title>
+        <script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
+        <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    </head>
+    <body>
+        <div id="root">
+
+        </div>
+        <script type="text/babel">
+            let rootHandle = document.getElementById('root');
+            class App extends React.Component {
+                constructor(props) {
+                    super(props);
+                    this.setState = {
+                        users: []
+                    }
+                }
+
+                componentDidMount() {
+                    axios.get('https://jsonplaceholder.typicode.com/users').then(response => {
+                        $this.setState({users: response.data })
+                    })
+                }
+                   
+                filter(e) {
+                    this.setState({
+                        filter: e.target.value
+                        })
+                }
+                render() {
+                    let users = this.state.users;
+                    if(this.state.filter) {
+                        users = users.filter( user => user.name.toLowerCase().includes(this.state.filter.toLowerCase()));
+                    }
+                    return(
+                        <div> 
+                            <input type="text" onChange={this.filter.bind(this)} />
+                            {users.map(user => <Person key={user.name} person={user} />)}
+                        </div>
+                    )
+            }
+            }
+
+            const Person = (props) => <h4> {props.person.name}</h4>
+
+            ReactDOM.render(<App/>, rootHandle);
+
+        </script>
+    </body>
+</html>
